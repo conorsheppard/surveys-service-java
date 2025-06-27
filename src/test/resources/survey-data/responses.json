@@ -1,0 +1,82 @@
+[
+  {
+    "respondent": 300,
+    "question": 100,
+    "choice": 0
+  },
+  {
+    "respondent": 300,
+    "question": 101,
+    "choice": 1
+  },
+  {
+    "respondent": 300,
+    "question": 102,
+    "choice": 0
+  },
+  {
+    "respondent": 300,
+    "question": 105,
+    "choice": 1
+  },
+  {
+    "respondent": 300,
+    "question": 109,
+    "choice": 3
+  },
+  {
+    "respondent": 301,
+    "question": 100,
+    "choice": 1
+  },
+  {
+    "respondent": 301,
+    "question": 103,
+    "choice": 3
+  },
+  {
+    "respondent": 301,
+    "question": 104,
+    "choice": 2
+  },
+  {
+    "respondent": 301,
+    "question": 106,
+    "choice": 0
+  },
+  {
+    "respondent": 301,
+    "question": 109,
+    "choice": 2
+  },
+  {
+    "respondent": 302,
+    "question": 100,
+    "choice": 1
+  },
+  {
+    "respondent": 302,
+    "question": 103,
+    "choice": 3
+  },
+  {
+    "respondent": 302,
+    "question": 104,
+    "choice": 2
+  },
+  {
+    "respondent": 302,
+    "question": 106,
+    "choice": 3
+  },
+  {
+    "respondent": 303,
+    "question": 100,
+    "choice": 2
+  },
+  {
+    "respondent": 303,
+    "question": 103,
+    "choice": 1
+  }
+]
