@@ -1,0 +1,274 @@
+{
+  "id": 200,
+  "name": "Survey 1",
+  "questions": [
+    {
+      "id": 100,
+      "text": "What do you expect to happen to the price of fuel in the UK in the next 6 months?",
+      "options": [
+        {
+          "text": "Much lower",
+          "route": 101
+        },
+        {
+          "text": "A little lower",
+          "route": 103
+        },
+        {
+          "text": "Stay about the same",
+          "route": 103
+        },
+        {
+          "text": "A little higher",
+          "route": 103
+        },
+        {
+          "text": "Much higher",
+          "route": 103
+        }
+      ],
+      "payout": 0
+    },
+    {
+      "id": 101,
+      "text": "Which toothpaste brand do you trust the most?",
+      "options": [
+        {
+          "text": "Colgate",
+          "route": 102
+        },
+        {
+          "text": "Aquafresh",
+          "route": 102
+        },
+        {
+          "text": "Oral-B",
+          "route": 102
+        },
+        {
+          "text": "Sensodyne",
+          "route": 102
+        },
+        {
+          "text": "Pearl Drops",
+          "route": 102
+        },
+        {
+          "text": "Supermarket own brand",
+          "route": 102
+        }
+      ],
+      "payout": 7
+    },
+    {
+      "id": 102,
+      "text": "What cash offer would lead you to switch your primary bank account?",
+      "options": [
+        {
+          "text": "Under £100",
+          "route": 105
+        },
+        {
+          "text": "£100",
+          "route": 105
+        },
+        {
+          "text": "£150",
+          "route": 105
+        },
+        {
+          "text": "£200",
+          "route": 105
+        },
+        {
+          "text": "Over £250",
+          "route": 105
+        }
+      ],
+      "payout": 8
+    },
+    {
+      "id": 103,
+      "text": "What is more important to you when buying flights?",
+      "options": [
+        {
+          "text": "Departure & arrival time (significantly)",
+          "route": 104
+        },
+        {
+          "text": "Departure & arrival time (slightly)",
+          "route": 104
+        },
+        {
+          "text": "Airline (slightly)",
+          "route": 104
+        },
+        {
+          "text": "Airline (significantly)",
+          "route": 104
+        }
+      ],
+      "payout": 3
+    },
+    {
+      "id": 104,
+      "text": "How likely are you to watch the next England football match live on TV?",
+      "options": [
+        {
+          "text": "Very unlikely",
+          "route": 106
+        },
+        {
+          "text": "Unlikely",
+          "route": 106
+        },
+        {
+          "text": "Not sure",
+          "route": 106
+        },
+        {
+          "text": "Likely",
+          "route": 107
+        },
+        {
+          "text": "Very likely",
+          "route": 107
+        }
+      ],
+      "payout": 5
+    },
+    {
+      "id": 105,
+      "text": "How do you expect fuel prices to change in the next 12 months?",
+      "options": [
+        {
+          "text": "Much lower",
+          "route": 109
+        },
+        {
+          "text": "A little lower",
+          "route": 109
+        },
+        {
+          "text": "Stay about the same",
+          "route": 109
+        },
+        {
+          "text": "A little higher",
+          "route": 109
+        },
+        {
+          "text": "Much higher",
+          "route": 109
+        }
+      ],
+      "payout": 9
+    },
+    {
+      "id": 106,
+      "text": "If you had to choose to vote Green Party or LibDems, who would you vote for?",
+      "options": [
+        {
+          "text": "Green Party (definitely)",
+          "route": 109
+        },
+        {
+          "text": "Green Party (slightly)",
+          "route": 109
+        },
+        {
+          "text": "LibDems (definitely)",
+          "route": 109
+        },
+        {
+          "text": "LibDems (slightly)",
+          "route": 109
+        }
+      ],
+      "payout": 11
+    },
+    {
+      "id": 107,
+      "text": "Rank these shoe brands by how fashionable they are",
+      "options": [
+        {
+          "text": "Nike",
+          "route": 108
+        },
+        {
+          "text": "Converse",
+          "route": 108
+        },
+        {
+          "text": "Puma",
+          "route": 108
+        },
+        {
+          "text": "Adidas",
+          "route": 108
+        },
+        {
+          "text": "Dunlop",
+          "route": 108
+        },
+        {
+          "text": "Reebok",
+          "route": 108
+        }
+      ],
+      "payout": 13
+    },
+    {
+      "id": 108,
+      "text": "Which type of phone would you consider buying the near future?",
+      "options": [
+        {
+          "text": "iPhone",
+          "route": 109
+        },
+        {
+          "text": "Android",
+          "route": 109
+        },
+        {
+          "text": "Windows Phone",
+          "route": 109
+        },
+        {
+          "text": "Blackberry",
+          "route": 109
+        },
+        {
+          "text": "FireFox OS",
+          "route": 109
+        }
+      ],
+      "payout": 5
+    },
+    {
+      "id": 109,
+      "text": "When do you most often eat cereal for breakfast?",
+      "options": [
+        {
+          "text": "Every day of the week"
+        },
+        {
+          "text": "Some weekdays and sometimes weekends"
+        },
+        {
+          "text": "Most days during the working week"
+        },
+        {
+          "text": "Only on weekends"
+        },
+        {
+          "text": "Maybe once or twice"
+        },
+        {
+          "text": "Never"
+        }
+      ],
+      "payout": 5
+    }
+  ]
+}
