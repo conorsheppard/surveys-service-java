@@ -21,3 +21,8 @@ Test Coverage
 
 I tried to keep most of the file structure the same and just added a SurveyService - to encapsulate the methods that address the tasks - and a set of tests, to confirm the functionality of the ServeyService.  
 Test coverage is a little low because we're only testing what is outlined in the above tasks.
+
+### Executing the test
+
+You can run the tests in your IDE, like in the demo below. Alternatively, you can run them with Maven (`make test`) or within a Docker container if you don't have Maven or Java 24 installed (`make docker-test`).
+

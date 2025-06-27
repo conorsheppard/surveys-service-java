@@ -8,6 +8,12 @@ clean:
 test: clean
 	mvn test
 
+package:
+	mvn package
+
+docker-test:
+	docker build . -t conorsheppard/surveys-service-java
+
 test-coverage:
 	mvn clean org.jacoco:jacoco-maven-plugin:0.8.13:prepare-agent verify org.jacoco:jacoco-maven-plugin:0.8.13:report
 
@@ -20,4 +26,4 @@ coverage-badge-gen:
 test-suite: test-coverage check-coverage coverage-badge-gen
 
 .SILENT:
-.PHONY: default run
+.PHONY: default clean test package docker-test test-coverage check-coverage coverage-badge-gen test-suite

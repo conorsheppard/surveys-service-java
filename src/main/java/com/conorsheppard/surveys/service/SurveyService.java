@@ -18,8 +18,8 @@ public class SurveyService {
     /**
      * Returns a mapping between Respondent ID (Integer) and the number of questions answered by the given respondent (Long).
      * Groups by respondent and counts occurrences.
-     * Time complexity: O(n)
-     * Space complexity: O(k), where k is the distinct number of respondents, at most n
+     * Time complexity: O(n).
+     * Space complexity: O(k), where k is the distinct number of respondents, at most n.
      * */
     public Map<Integer, Long> getRespondentAnswerCounts() {
         return responseRepo.listResponses().stream()
@@ -31,8 +31,9 @@ public class SurveyService {
 
     /**
      * Returns a mapping between Respondent ID (Integer) and the amount earned (in pence) for questions answered.
-     * Time complexity: O(q + n), where q is the number of questions (when building the payout map) and n is the number of responses
-     * Space complexity: O(q + k), where we're storing an entry for each question q, and k is the number of unique respondents
+     * Time complexity: O(q + n), where q is the number of questions (when building the payout map) and n is the number of responses.
+     * Space complexity: O(q + k), where we're storing an entry for each question q, and k is the number of unique respondents.
+     * @param surveyId ID of the survey the respondent has completed (or in the process of).
      * */
     public Map<Integer, Long> getRespondentAmountsEarned(int surveyId) {
         var questions = surveyRepo.surveyById(surveyId).questions;
