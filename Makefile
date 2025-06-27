@@ -11,6 +11,11 @@ test: clean
 package:
 	mvn package
 
+exec:
+	export MAVEN_OPTS="--enable-native-access=ALL-UNNAMED --sun-misc-unsafe-memory-access=allow" \
+	&& mvn clean package -q \
+	&& mvn exec:java
+
 docker-test:
 	docker build . -t conorsheppard/surveys-service-java
 

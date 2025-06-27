@@ -19,8 +19,16 @@ Test Coverage
 
 ### Implementation
 
-I tried to keep most of the file structure the same and just added a SurveyService - to encapsulate the methods that address the tasks - and a set of tests, to confirm the functionality of the ServeyService.  
+I tried to keep most of the file structure the same as it is in the original repo and just added a SurveyService - to encapsulate the methods that address the tasks - and a set of tests, to confirm the functionality of the ServeyService.  
 Test coverage is a little low because we're only testing what is outlined in the above tasks.
+
+### Executing main
+
+To run the main method with Maven, execute the following command:
+
+```shell
+make exec
+```
 
 ### Executing the tests
 
