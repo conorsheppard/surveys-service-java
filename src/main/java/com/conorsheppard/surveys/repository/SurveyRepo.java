@@ -6,17 +6,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class SurveyRepo {
     public List<Survey> surveys;
 
     public SurveyRepo() throws IOException {
-        this.surveys = Arrays.asList(SurveyRepo.loadSurvey("survey.json"));
+        this.surveys = Collections.singletonList(SurveyRepo.loadSurvey("survey.json"));
     }
 
     public Survey surveyById(int surveyId) {
-        return surveys.stream().filter(survey -> survey.id == surveyId)
+        return surveys.stream().filter(survey -> survey.id() == surveyId)
                 .findFirst()
                 .orElse(null);
     }

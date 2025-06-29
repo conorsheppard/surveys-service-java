@@ -16,11 +16,11 @@ public class ResponseRepo {
     }
 
     public List<Response> responsesByRespondent(int respondentId) {
-        return this.responses.stream().filter(response -> response.respondent == respondentId).toList();
+        return this.responses.stream().filter(response -> response.respondent() == respondentId).toList();
     }
 
     public List<Response> responsesByRespondentAndQuestion(int respondentId, int questionId) {
-        return this.responses.stream().filter(response -> response.respondent == respondentId && response.question == questionId).toList();
+        return this.responses.stream().filter(response -> response.respondent() == respondentId && response.question() == questionId).toList();
     }
 
     public List<Response> listResponses() {

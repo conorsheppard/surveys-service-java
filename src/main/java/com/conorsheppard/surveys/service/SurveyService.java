@@ -1,8 +1,11 @@
 package com.conorsheppard.surveys.service;
 
+import com.conorsheppard.surveys.models.Question;
+import com.conorsheppard.surveys.models.Response;
 import com.conorsheppard.surveys.repository.ResponseRepo;
 import com.conorsheppard.surveys.repository.SurveyRepo;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -20,11 +23,11 @@ public class SurveyService {
      * Groups by respondent and counts occurrences.
      * Time complexity: O(n).
      * Space complexity: O(k), where k is the distinct number of respondents, at most n.
-     * */
+     */
     public Map<Integer, Long> getRespondentAnswerCounts() {
         return responseRepo.listResponses().stream()
                 .collect(Collectors.groupingBy(
-                        r -> r.respondent,
+                        r -> r.respondent(),
                         Collectors.counting()
                 ));
     }
@@ -33,19 +36,20 @@ public class SurveyService {
      * Returns a mapping between Respondent ID (Integer) and the amount earned (in pence) for questions answered.
      * Time complexity: O(q + n), where q is the number of questions (when building the payout map) and n is the number of responses.
      * Space complexity: O(q + k), where we're storing an entry for each question q, and k is the number of unique respondents.
+     *
      * @param surveyId ID of the survey the respondent has completed (or in the process of).
-     * */
+     */
     public Map<Integer, Long> getRespondentAmountsEarned(int surveyId) {
-        var questions = surveyRepo.surveyById(surveyId).questions;
+        var questionToPayoutMap = surveyRepo.surveyById(surveyId)
+                .questions()
+                .stream()
+                .collect(Collectors.toMap(Question::id, Question::payout));
 
-        Map<Integer, Integer> questionPayoutMap = questions.stream()
-                .collect(Collectors.toMap(q -> q.id, q -> q.payout));
-
-        return responseRepo.listResponses().stream()
-                .filter(r -> questionPayoutMap.containsKey(r.question)) // Only consider relevant questions
+        return responseRepo.listResponses()
+                .stream()
+                .filter(response -> questionToPayoutMap.containsKey(response.question())) // filter out questions from other surveys
                 .collect(Collectors.groupingBy(
-                        r -> r.respondent,
-                        Collectors.summingLong(r -> questionPayoutMap.get(r.question))
-                ));
+                        Response::respondent,
+                        Collectors.summingLong(r -> questionToPayoutMap.get(r.question()))));
     }
 }

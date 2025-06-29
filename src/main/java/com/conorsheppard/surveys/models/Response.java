@@ -1,9 +1,18 @@
 package com.conorsheppard.surveys.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Accessors(fluent = true, chain = true)
 public class Response {
-    public int respondent;
-    public int question;
-    public int choice;
+    private int respondent;
+    private int question;
+    private int choice;
 
     @Override
     public String toString() {
