@@ -2,6 +2,8 @@ package com.conorsheppard.surveys.repository;
 
 import com.conorsheppard.surveys.models.Survey;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.IOException;
 import java.net.URL;
@@ -9,8 +11,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+@Data
 public class SurveyRepo {
-    public List<Survey> surveys;
+    private List<Survey> surveys;
 
     public SurveyRepo() throws IOException {
         this.surveys = Collections.singletonList(SurveyRepo.loadSurvey("survey.json"));

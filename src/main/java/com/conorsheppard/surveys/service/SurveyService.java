@@ -25,9 +25,9 @@ public class SurveyService {
      * Space complexity: O(k), where k is the distinct number of respondents, at most n.
      */
     public Map<Integer, Long> getRespondentAnswerCounts() {
-        return responseRepo.listResponses().stream()
+        return responseRepo.getResponses().stream()
                 .collect(Collectors.groupingBy(
-                        r -> r.respondent(),
+                        Response::respondent,
                         Collectors.counting()
                 ));
     }
@@ -45,9 +45,9 @@ public class SurveyService {
                 .stream()
                 .collect(Collectors.toMap(Question::id, Question::payout));
 
-        return responseRepo.listResponses()
+        return responseRepo.getResponses()
                 .stream()
-                .filter(response -> questionToPayoutMap.containsKey(response.question())) // filter out questions from other surveys
+//                .filter(response -> questionToPayoutMap.containsKey(response.question())) // filter out questions from other surveys
                 .collect(Collectors.groupingBy(
                         Response::respondent,
                         Collectors.summingLong(r -> questionToPayoutMap.get(r.question()))));
