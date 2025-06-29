@@ -47,7 +47,7 @@ public class SurveyService {
 
         return responseRepo.getResponses()
                 .stream()
-//                .filter(response -> questionToPayoutMap.containsKey(response.question())) // filter out questions from other surveys
+                .filter(response -> questionToPayoutMap.containsKey(response.question())) // filter out questions from other surveys
                 .collect(Collectors.groupingBy(
                         Response::respondent,
                         Collectors.summingLong(r -> questionToPayoutMap.get(r.question()))));
