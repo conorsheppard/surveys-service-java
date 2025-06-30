@@ -1,6 +1,11 @@
 [
   {
     "respondent": 300,
+    "question": 99,
+    "choice": 0
+  },
+  {
+    "respondent": 300,
     "question": 100,
     "choice": 0
   },
