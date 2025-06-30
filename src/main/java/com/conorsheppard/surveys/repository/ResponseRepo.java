@@ -6,12 +6,14 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
 @Data
+@Accessors(chain = true)
 public class ResponseRepo {
     private List<Response> responses;
 
@@ -19,11 +21,11 @@ public class ResponseRepo {
         this.responses = ResponseRepo.loadResponses("responses.json");
     }
 
-    public List<Response> responsesByRespondent(int respondentId) {
+    public List<Response> getResponsesByRespondent(int respondentId) {
         return this.responses.stream().filter(response -> response.respondent() == respondentId).toList();
     }
 
-    public List<Response> responsesByRespondentAndQuestion(int respondentId, int questionId) {
+    public List<Response> getResponsesByRespondentAndQuestion(int respondentId, int questionId) {
         return this.responses.stream().filter(response -> response.respondent() == respondentId && response.question() == questionId).toList();
     }
 

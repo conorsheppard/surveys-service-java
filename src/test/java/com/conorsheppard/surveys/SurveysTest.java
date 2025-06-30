@@ -10,6 +10,7 @@ import com.conorsheppard.surveys.service.SurveyService;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -25,36 +26,39 @@ import static org.mockito.Mockito.when;
 public class SurveysTest {
     private static SurveyService surveyService;
 
-    @SneakyThrows
-    @BeforeAll
-    static void setUp() {
-        surveyService = new SurveyService(new SurveyRepo(), new ResponseRepo());
-    }
+    @Nested
+    class TestsNeedingSetup {
+        @SneakyThrows
+        @BeforeAll
+        static void setUp() {
+            surveyService = new SurveyService(new SurveyRepo(), new ResponseRepo());
+        }
 
-    @ParameterizedTest
-    @CsvSource({
-            "300, 6", // 6 answers across 2 surveys
-            "301, 5",
-            "302, 4",
-            "303, 2",
-    })
-    @DisplayName("Test for exercise task 1: Count no. of questions per respondent")
-    void testTask1(int respondentId, int numQsAnsweredExpected) {
-        Map<Integer, Long> respondentCounts = surveyService.getRespondentAnswerCounts();
-        assertEquals(numQsAnsweredExpected, respondentCounts.get(respondentId));
-    }
+        @ParameterizedTest
+        @CsvSource({
+                "300, 6", // 6 answers across 2 surveys
+                "301, 5",
+                "302, 4",
+                "303, 2",
+        })
+        @DisplayName("Test for exercise task 1: Count no. of questions per respondent")
+        void testTask1(int respondentId, int numQsAnsweredExpected) {
+            Map<Integer, Long> respondentCounts = surveyService.getRespondentAnswerCounts();
+            assertEquals(numQsAnsweredExpected, respondentCounts.get(respondentId));
+        }
 
-    @ParameterizedTest
-    @CsvSource({
-            "300, 29",
-            "301, 24",
-            "302, 19",
-            "303, 3",
-    })
-    @DisplayName("Test for exercise task 2: Aggregate amount earned by each respondent in pence")
-    void testTask2(int respondentId, int amountEarnedExpected) {
-        Map<Integer, Long> respondentAmountsEarned = surveyService.getRespondentAmountsEarned(200);
-        assertEquals(amountEarnedExpected, respondentAmountsEarned.get(respondentId));
+        @ParameterizedTest
+        @CsvSource({
+                "300, 29",
+                "301, 24",
+                "302, 19",
+                "303, 3",
+        })
+        @DisplayName("Test for exercise task 2: Aggregate amount earned by each respondent in pence")
+        void testTask2(int respondentId, int amountEarnedExpected) {
+            Map<Integer, Long> respondentAmountsEarned = surveyService.getRespondentAmountsEarned(200);
+            assertEquals(amountEarnedExpected, respondentAmountsEarned.get(respondentId));
+        }
     }
 
     @ParameterizedTest
@@ -66,7 +70,7 @@ public class SurveysTest {
         // Mock the survey and set up questions with 1 irrelevant question
         var surveyRepoMock = mock(SurveyRepo.class);
         int surveyId = 500, questionId1 = 100, questionId2 = 101;
-        when(surveyRepoMock.surveyById(surveyId)).thenReturn(new Survey()
+        when(surveyRepoMock.getSurveyById(surveyId)).thenReturn(new Survey()
                 .id(surveyId)
                 .name("Example Survey")
                 .questions(List.of(
@@ -107,6 +111,10 @@ public class SurveysTest {
                 new Question(4, "Example question 4", List.of(
                         new Choice("Choice 1", -1, 0),
                         new Choice("Choice 2", 2, 1)
+                ), 25),
+                new Question(7, "Example question 4", List.of(
+                        new Choice("Choice 1", 3, 0),
+                        new Choice("Choice 2", 2, 1)
                 ), 25)
         );
         var surveyWithCycle = new Survey(200, "Example Survey", questions);
@@ -123,9 +131,23 @@ public class SurveysTest {
         assertFalse(new SurveyService.SurveyCycleDetector().hasCycle(surveyWithoutCycle));
     }
 
-    // Tests whether the choice index exists in each question the respondent answered
-    // Checks to make sure choices don't point back to the question they are within
-    void testRespondentMadeValidChoices() {
+    /**
+     * Tests whether the choice index exists in each question the respondent answered.
+     */
+    @SneakyThrows
+    @ParameterizedTest
+    @CsvSource({
+            "300, responses-invalid.json, false",
+            "300, responses-valid.json, true",
+    })
+    @DisplayName("Tests that all questions not belonging to the given survey are filtered out, avoiding java.lang.NullPointerException")
+    void testRespondentMadeValidChoices(int respondentId, String fileName, boolean expectedValid) {
+        var responseRepo = new ResponseRepo().setResponses(ResponseRepo.loadResponses("valid-choices-test/" + fileName));
+        var responses = responseRepo.getResponsesByRespondent(respondentId);
+        var surveyRepo = new SurveyRepo();
+        var service = new SurveyService(surveyRepo, responseRepo);
+        var survey = surveyRepo.getSurveyById(200);
 
+        assertEquals(expectedValid, service.allChoicesAreValid(responses, survey));
     }
 }

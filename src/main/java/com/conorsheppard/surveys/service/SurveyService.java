@@ -44,7 +44,7 @@ public class SurveyService {
      * @param surveyId ID of the survey the respondent has completed (or in the process of).
      */
     public Map<Integer, Long> getRespondentAmountsEarned(int surveyId) {
-        var questionToPayoutMap = surveyRepo.surveyById(surveyId)
+        var questionToPayoutMap = surveyRepo.getSurveyById(surveyId)
                 .questions()
                 .stream()
                 .collect(Collectors.toMap(Question::id, Question::payout));
@@ -55,6 +55,25 @@ public class SurveyService {
                 .collect(Collectors.groupingBy(
                         Response::respondent,
                         Collectors.summingLong(r -> questionToPayoutMap.get(r.question()))));
+    }
+
+    /**
+     * Returns true if all the choice indexes are valid for a respondents answers
+     *
+     * @param responses input list of responses for a given respondent
+     * @param survey    input survey the respondent has answered
+     */
+    public boolean allChoicesAreValid(List<Response> responses, Survey survey) {
+        // construct a questions-to-num-options map
+        var questionToChoiceCountMap = survey.questions()
+                .stream()
+                .collect(
+                        Collectors.toMap(Question::id, q -> (long) q.options().size())
+                );
+
+        return responses.stream()
+                .allMatch(response ->
+                        response.choice() > 0 && response.choice() < questionToChoiceCountMap.get(response.question()));
     }
 
     /**

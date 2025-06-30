@@ -19,7 +19,7 @@ public class SurveyRepo {
         this.surveys = Collections.singletonList(SurveyRepo.loadSurvey("survey.json"));
     }
 
-    public Survey surveyById(int surveyId) {
+    public Survey getSurveyById(int surveyId) {
         return surveys.stream().filter(survey -> survey.id() == surveyId)
                 .findFirst()
                 .orElse(null);
