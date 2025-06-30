@@ -1,5 +1,6 @@
 package com.conorsheppard.surveys;
 
+import com.conorsheppard.surveys.models.Choice;
 import com.conorsheppard.surveys.models.Question;
 import com.conorsheppard.surveys.models.Response;
 import com.conorsheppard.surveys.models.Survey;
@@ -9,15 +10,17 @@ import com.conorsheppard.surveys.service.SurveyService;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import static org.mockito.Mockito.*;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class SurveysTest {
     private static SurveyService surveyService;
@@ -85,12 +88,43 @@ public class SurveysTest {
         assertEquals(amountEarnedExpected, respondentAmountsEarned.get(respondentId));
     }
 
-
+    @Test
     void testSurveyHasCycle() {
+        // Create a survey with a cycle
+        var questions = List.of(
+                new Question(1, "Example question 1", List.of(
+                        new Choice("Choice 1", 2, 0),
+                        new Choice("Choice 2", 3, 1)
+                ), 25),
+                new Question(2, "Example question 2", List.of(
+                        new Choice("Choice 1", 3, 0),
+                        new Choice("Choice 2", 4, 1)
+                ), 25),
+                new Question(3, "Example question 3", List.of(
+                        new Choice("Choice 1", -1, 0),
+                        new Choice("Choice 2", -1, 1)
+                ), 25),
+                new Question(4, "Example question 4", List.of(
+                        new Choice("Choice 1", -1, 0),
+                        new Choice("Choice 2", 2, 1)
+                ), 25)
+        );
+        var surveyWithCycle = new Survey(200, "Example Survey", questions);
 
+        assertTrue(new SurveyService.SurveyCycleDetector().hasCycle(surveyWithCycle));
+
+        var questionsNoCycle = new ArrayList<>(questions);
+        questionsNoCycle.remove(3);
+        questionsNoCycle.add(new Question(4, "Example question 4",
+                List.of(new Choice("Choice 1", -1, 0), new Choice("Choice 2", -1, 1)), 25));
+
+        var surveyWithoutCycle = new Survey(200, "Example Survey", questionsNoCycle);
+
+        assertFalse(new SurveyService.SurveyCycleDetector().hasCycle(surveyWithoutCycle));
     }
 
     // Tests whether the choice index exists in each question the respondent answered
+    // Checks to make sure choices don't point back to the question they are within
     void testRespondentMadeValidChoices() {
 
     }
